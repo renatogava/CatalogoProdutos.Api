@@ -20,6 +20,10 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddControllers();
+
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
 
 app.UseCors("PermitirFrontend");
@@ -28,8 +32,12 @@ app.UseCors("PermitirFrontend");
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
+
+app.MapControllers();
 
 app.Run();
