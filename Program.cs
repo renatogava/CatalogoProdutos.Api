@@ -1,5 +1,7 @@
+using CatalogoProdutos.Api.Auth;
 using CatalogoProdutos.Api.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,13 +22,35 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddSwaggerGen(c =>
+{
+    c.AddSecurityDefinition("Basic",
+    new OpenApiSecurityScheme
+    {
+        Type = SecuritySchemeType.Http,
+        Scheme = "basic"
+    });
+    c.AddSecurityRequirement(doc =>
+        new OpenApiSecurityRequirement
+        {
+            [new OpenApiSecuritySchemeReference(
+        "Basic", doc)] = []
+    });
+});
+
 builder.Services.AddControllers();
 
-builder.Services.AddSwaggerGen();
+builder.Services.AddAuthentication("Basic")
+    .AddScheme<Microsoft.AspNetCore.Authentication.AuthenticationSchemeOptions,
+    BasicAuthHandler>("Basic", null);
+
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
 app.UseCors("PermitirFrontend");
+app.UseAuthentication();
+app.UseAuthorization();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

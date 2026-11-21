@@ -1,10 +1,12 @@
 using CatalogoProdutos.Api.Data;
 using CatalogoProdutos.Api.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 [ApiController]
 [Route("api/admin/produtos")]
+[Authorize]
 public class ProdutosAdminController : ControllerBase
 {
     private readonly CatalogoContext _context;
