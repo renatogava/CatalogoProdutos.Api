@@ -50,7 +50,7 @@ public class BasicAuthHandler : AuthenticationHandler<AuthenticationSchemeOption
         }
         catch
         {
-            return AuthenticateResult.Fail("Cabeçalho de Autorização Inválido");
+            return AuthenticateResult.Fail("Cabeçalho de Autorização não é válido");
         }
     }
 }
