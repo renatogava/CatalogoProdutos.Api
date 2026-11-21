@@ -16,7 +16,9 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("PermitirFrontend", builder =>
     {
-        builder.WithOrigins("http://localhost:4200")
+        builder.WithOrigins(
+            "http://localhost:4200", 
+            "https://wonderful-field-0a7ae1d0f.6.azurestaticapps.net")
                .AllowAnyHeader()
                .AllowAnyMethod();
     });
